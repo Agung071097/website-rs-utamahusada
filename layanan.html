@@ -5,7 +5,7 @@
   <title>Layanan & Jadwal Dokter - RS Utama Husada AIF</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Tambahan sedikit style untuk tampilan nomor */
+    /* Style untuk badge nomor antrean */
     .nomor-badge {
       background-color: #007bff;
       color: white;
@@ -14,10 +14,35 @@
       font-weight: bold;
       font-size: 0.9em;
     }
+
+    /* Style tombol daftar */
     .btn-daftar {
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
+      background-color: #28a745;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+    .btn-daftar:hover {
+      background-color: #218838;
+    }
+
+    /* CSS BARU: Style untuk Foto Dokter dalam Tabel */
+    .dokter-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .foto-profil {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid #ddd;
+      background-color: #f8f9fa;
     }
   </style>
 </head>
@@ -80,44 +105,69 @@
       </thead>
       <tbody>
         <tr>
-          <td>dr. Astu Anindya Jati, Sp.PD</td>
+          <td>
+            <div class="dokter-info">
+              <img src="dr Sp.Pd.jpg" class="foto-profil" alt="dr. Astu">
+              <span>dr. Astu Anindya Jati, Sp.PD</span>
+            </div>
+          </td>
           <td>Penyakit Dalam</td>
           <td>Selasa - Jumat</td>
           <td>16.00 - 19.00</td>
           <td><span id="antrean-dalam" class="nomor-badge">0</span></td>
-          <td><a href="#" onclick="ambilAntrean('dalam', 'dr. Astu')" class="btn-daftar">Daftar</a></td>
+          <td><a href="#" onclick="ambilAntrean('Penyakit Dalam', 'dr. Astu')" class="btn-daftar">Daftar</a></td>
         </tr>
         <tr>
-          <td>dr. Dian Hadi Purnamasari, Sp.A</td>
+          <td>
+            <div class="dokter-info">
+              <img src="dr Anak.jpg" class="foto-profil" alt="dr. Dian">
+              <span>dr. Dian Hadi Purnamasari, Sp.A</span>
+            </div>
+          </td>
           <td>Anak</td>
           <td>Senin, Rabu, Jumat</td>
           <td>16.00 - 18.00</td>
           <td><span id="antrean-anak" class="nomor-badge">0</span></td>
-          <td><a href="#" onclick="ambilAntrean('anak', 'dr. Dian')" class="btn-daftar">Daftar</a></td>
+          <td><a href="#" onclick="ambilAntrean('Anak', 'dr. Dian')" class="btn-daftar">Daftar</a></td>
         </tr>
         <tr>
-          <td>dr. Dwianto Budi Prabowo</td>
+          <td>
+            <div class="dokter-info">
+              <img src="dr dwi.png" class="foto-profil" alt="dr. Dwianto">
+              <span>dr. Dwianto Budi Prabowo</span>
+            </div>
+          </td>
           <td>Umum (Ozon)</td>
           <td>Senin - Minggu</td>
           <td>07.00 - 21.00</td>
           <td><span id="antrean-ozon" class="nomor-badge">0</span></td>
-          <td><a href="#" onclick="ambilAntrean('ozon', 'dr. Dwianto')" class="btn-daftar">Daftar</a></td>
+          <td><a href="#" onclick="ambilAntrean('Umum (Ozon)', 'dr. Dwianto')" class="btn-daftar">Daftar</a></td>
         </tr>
         <tr>
-          <td>dr. Indra K.A Putranto, Sp.B</td>
+          <td>
+            <div class="dokter-info">
+              <img src="dr Sp.B.jpg" class="foto-profil" alt="dr. Indra">
+              <span>dr. Indra K.A Putranto, Sp.B</span>
+            </div>
+          </td>
           <td>Bedah</td>
           <td>Selasa & Kamis</td>
           <td>15.00 - 17.00</td>
           <td><span id="antrean-bedah" class="nomor-badge">0</span></td>
-          <td><a href="#" onclick="ambilAntrean('bedah', 'dr. Indra')" class="btn-daftar">Daftar</a></td>
+          <td><a href="#" onclick="ambilAntrean('Bedah', 'dr. Indra')" class="btn-daftar">Daftar</a></td>
         </tr>
         <tr>
-          <td>dr. Shodiq Kukuh, Sp.O.G</td>
+          <td>
+            <div class="dokter-info">
+              <img src="dr spog.jpg" class="foto-profil" alt="dr. Shodiq">
+              <span>dr. Shodiq Kukuh, Sp.O.G</span>
+            </div>
+          </td>
           <td>Kandungan</td>
           <td>Senin, Rabu, Jumat</td>
           <td>16.00 - 18.00</td>
           <td><span id="antrean-kandungan" class="nomor-badge">0</span></td>
-          <td><a href="#" onclick="ambilAntrean('kandungan', 'dr. Shodiq')" class="btn-daftar">Daftar</a></td>
+          <td><a href="#" onclick="ambilAntrean('Kandungan', 'dr. Shodiq')" class="btn-daftar">Daftar</a></td>
         </tr>
       </tbody>
     </table>
@@ -137,31 +187,50 @@
 </footer>
 
 <script>
-  // Fungsi untuk memuat nomor antrean dari memori browser saat halaman dibuka
-  function muatAntrean() {
-    const polis = ['dalam', 'anak', 'ozon', 'bedah', 'kandungan'];
-    polis.forEach(poli => {
-      const nomor = localStorage.getItem('antrean_' + poli) || 0;
-      document.getElementById('antrean-' + poli).innerText = nomor;
-    });
+  const API_URL = 'daftar.php'; 
+
+  async function muatAntrean() {
+    // Fungsi ini bisa dikembangkan untuk memanggil data antrean dari server
   }
 
-  // Fungsi untuk menambah antrean
-  function ambilAntrean(poli, namaDokter) {
-    let nomorSekarang = parseInt(localStorage.getItem('antrean_' + poli)) || 0;
-    nomorSekarang++;
+  async function ambilAntrean(poli, namaDokter) {
+    const namaPasien = prompt("Masukkan Nama Lengkap Pasien:") || "Pasien Baru";
     
-    // Simpan ke memori browser
-    localStorage.setItem('antrean_' + poli, nomorSekarang);
-    
-    // Update tampilan tabel
-    document.getElementById('antrean-' + poli).innerText = nomorSekarang;
-    
-    // Beri konfirmasi ke pasien
-    alert("Pendaftaran Berhasil!\n\nDokter: " + namaDokter + "\nNomor Antrean Anda: " + nomorSekarang + "\n\nSilakan datang tepat waktu.");
+    let formData = new FormData();
+    formData.append('poli', poli);
+    formData.append('dokter', namaDokter);
+    formData.append('nama_pasien', namaPasien);
+
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+
+        if (data.success) {
+            const noAntrean = data.nomor;
+            const idPoli = poli.split(' ')[0].toLowerCase().replace('(', '').replace(')', '');
+
+            const targetEl = document.getElementById('antrean-' + idPoli);
+            if(targetEl) targetEl.innerText = noAntrean;
+
+            const tgl = new Date().toISOString().split('T')[0];
+            const pesan = `*Pendaftaran Pasien Online*%0A---------------------------%0ANama: ${namaPasien}%0APoli: ${poli} (${namaDokter})%0ATanggal: ${tgl}%0A*Nomor Antrean: ${noAntrean}*%0A---------------------------%0A_Mohon datang tepat waktu._`;
+
+            const noWAAdmin = "6285232755464"; 
+            window.open(`https://wa.me/${noWAAdmin}?text=${pesan}`, '_blank');
+
+        } else {
+            alert("Gagal mengambil nomor. Silakan hubungi admin.");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Koneksi bermasalah. Pastikan file daftar.php sudah terpasang.");
+    }
   }
 
-  // Jalankan fungsi muat saat website diakses
   window.onload = muatAntrean;
 </script>
 
